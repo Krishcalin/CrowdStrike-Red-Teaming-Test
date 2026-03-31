@@ -1,0 +1,740 @@
+{
+  "meta": {
+    "technique": "T1562.001",
+    "technique_name": "Impair Defenses: Disable or Modify Tools",
+    "total_atomic_tests": 59,
+    "findings_count": 42,
+    "scan_time": "2026-03-31T07:51:55.708130",
+    "source": "https://atomicredteam.io/docs/atomics/T1562.001"
+  },
+  "findings": [
+    {
+      "test_number": 1,
+      "check_id": "T1562.001-01",
+      "title": "Syslog (rsyslog) is disabled",
+      "severity": "HIGH",
+      "category": "Syslog & Linux",
+      "description": "rsyslog service is stopped/disabled \u2014 log collection halted.",
+      "affected_items": [
+        "rsyslog: inactive"
+      ],
+      "affected_count": 1,
+      "remediation": "systemctl enable rsyslog && systemctl start rsyslog",
+      "platform": "Linux",
+      "atomic_guid": "4ce786f8-e601-44b5-bfae-9ebb15a7d1c8",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 4,
+      "check_id": "T1562.001-04",
+      "title": "SELinux is permissive",
+      "severity": "HIGH",
+      "category": "Syslog & Linux",
+      "description": "SELinux enforcement is permissive \u2014 mandatory access control inactive.",
+      "affected_items": [
+        "SELinux mode: permissive"
+      ],
+      "affected_count": 1,
+      "remediation": "setenforce 1 && edit /etc/selinux/config \u2192 SELINUX=enforcing",
+      "platform": "Linux",
+      "atomic_guid": "fc225f36-9279-4c39-b3f9-5141ab74f8d8",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 5,
+      "check_id": "T1562.001-05",
+      "title": "CrowdStrike Falcon sensor stopped on Linux",
+      "severity": "CRITICAL",
+      "category": "EDR-Specific",
+      "description": "falcon-sensor.service is stopped \u2014 EDR protection disabled.",
+      "affected_items": [
+        "falcon-sensor: stopped"
+      ],
+      "affected_count": 1,
+      "remediation": "systemctl enable falcon-sensor && systemctl start falcon-sensor",
+      "platform": "Linux",
+      "atomic_guid": "828a1278-81cc-4802-96ab-188bf29ca77d",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 39,
+      "check_id": "T1562.001-39",
+      "title": "Shell history cleared",
+      "severity": "MEDIUM",
+      "category": "Syslog & Linux",
+      "description": "Bash history cleared \u2014 attacker covering tracks.",
+      "affected_items": [
+        "history -c detected or history file empty"
+      ],
+      "affected_count": 1,
+      "remediation": "Review .bash_history backup. Enable HISTTIMEFORMAT.",
+      "platform": "Linux",
+      "atomic_guid": "23b88394-091b-4968-a42d-fb8076992443",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 40,
+      "check_id": "T1562.001-40",
+      "title": "Shell history suspended",
+      "severity": "MEDIUM",
+      "category": "Syslog & Linux",
+      "description": "set +o history detected \u2014 commands not being recorded.",
+      "affected_items": [
+        "history recording suspended"
+      ],
+      "affected_count": 1,
+      "remediation": "set -o history to re-enable.",
+      "platform": "Linux",
+      "atomic_guid": "94f6a1c9-aae7-46a4-9083-2bb1f5768ec4",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 41,
+      "check_id": "T1562.001-41",
+      "title": "Kernel SysRq enabled (reboot risk)",
+      "severity": "MEDIUM",
+      "category": "Syslog & Linux",
+      "description": "kernel.sysrq=1 \u2014 allows magic SysRq key for forced reboot.",
+      "affected_items": [
+        "kernel.sysrq = 1"
+      ],
+      "affected_count": 1,
+      "remediation": "echo 0 > /proc/sys/kernel/sysrq",
+      "platform": "Linux",
+      "atomic_guid": "6d6d3154-1a52-4d1a-9d51-92ab8148b32e",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 42,
+      "check_id": "T1562.001-42",
+      "title": "Paging cache cleared (vm.drop_caches=3)",
+      "severity": "LOW",
+      "category": "Syslog & Linux",
+      "description": "All page/slab/dentry caches dropped.",
+      "affected_items": [
+        "vm.drop_caches = 3"
+      ],
+      "affected_count": 1,
+      "remediation": "Normal during maintenance. Investigate if unexpected.",
+      "platform": "Linux",
+      "atomic_guid": "f790927b-ea85-4a16-b7b2-7eb44176a510",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 43,
+      "check_id": "T1562.001-43",
+      "title": "Memory swap disabled",
+      "severity": "MEDIUM",
+      "category": "Syslog & Linux",
+      "description": "Swap disabled \u2014 data recovery from swap impossible.",
+      "affected_items": [
+        "swapoff -a detected"
+      ],
+      "affected_count": 1,
+      "remediation": "swapon -a to re-enable.",
+      "platform": "Linux",
+      "atomic_guid": "e74e4c63-6fde-4ad2-9ee8-21c3a1733114",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 59,
+      "check_id": "T1562.001-59",
+      "title": "ASLR disabled on Linux",
+      "severity": "HIGH",
+      "category": "Syslog & Linux",
+      "description": "kernel.randomize_va_space=0 \u2014 address randomization disabled.",
+      "affected_items": [
+        "kernel.randomize_va_space = 0"
+      ],
+      "affected_count": 1,
+      "remediation": "sysctl -w kernel.randomize_va_space=2",
+      "platform": "Linux",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 7,
+      "check_id": "T1562.001-07",
+      "title": "LittleSnitch disabled on macOS",
+      "severity": "HIGH",
+      "category": "macOS Security",
+      "description": "LittleSnitch daemon unloaded \u2014 protection inactive.",
+      "affected_items": [
+        "at.obdev.littlesnitchd: unloaded"
+      ],
+      "affected_count": 1,
+      "remediation": "sudo launchctl load -w /Library/LaunchDaemons/at.obdev.littlesnitchd.plist",
+      "platform": "macOS",
+      "atomic_guid": "62155dd8-bb3d-4f32-b31c-6532ff3ac6a3",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 9,
+      "check_id": "T1562.001-09",
+      "title": "macOS Gatekeeper disabled",
+      "severity": "HIGH",
+      "category": "macOS Security",
+      "description": "Gatekeeper disabled \u2014 unsigned apps can run.",
+      "affected_items": [
+        "Gatekeeper: disabled"
+      ],
+      "affected_count": 1,
+      "remediation": "sudo spctl --master-enable",
+      "platform": "macOS",
+      "atomic_guid": "2a821573-fb3f-4e71-92c3-daac7432f053",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 10,
+      "check_id": "T1562.001-10",
+      "title": "CrowdStrike Falcon disabled on macOS",
+      "severity": "HIGH",
+      "category": "macOS Security",
+      "description": "CrowdStrike Falcon daemon unloaded \u2014 protection inactive.",
+      "affected_items": [
+        "com.crowdstrike.falcond: unloaded"
+      ],
+      "affected_count": 1,
+      "remediation": "sudo launchctl load -w /Library/LaunchDaemons/com.crowdstrike.falcond.plist",
+      "platform": "macOS",
+      "atomic_guid": "b3e7510c-2d4c-4249-a33f-591a2bc83eef",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 11,
+      "check_id": "T1562.001-11",
+      "title": "Sysmon filter driver not loaded",
+      "severity": "HIGH",
+      "category": "Sysmon Tampering",
+      "description": "SysmonDrv not in loaded filter drivers \u2014 fltmc.exe unload suspected.",
+      "affected_items": [
+        "SysmonDrv: not found in fltmc output"
+      ],
+      "affected_count": 1,
+      "remediation": "Reinstall Sysmon: sysmon -accepteula -i",
+      "platform": "Windows",
+      "atomic_guid": "811b3e76-c41b-430c-ac0d-e2380bfaa164",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 12,
+      "check_id": "T1562.001-12",
+      "title": "Sysmon service not installed",
+      "severity": "HIGH",
+      "category": "Sysmon Tampering",
+      "description": "Sysmon service not found \u2014 may have been uninstalled (sysmon -u).",
+      "affected_items": [
+        "Sysmon: not found in services"
+      ],
+      "affected_count": 1,
+      "remediation": "Reinstall Sysmon: sysmon -accepteula -i <config.xml>",
+      "platform": "Windows",
+      "atomic_guid": "a316fb2e-5344-470d-91c1-23e15c374edc",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 13,
+      "check_id": "T1562.001-13",
+      "title": "AMSI InitFailed bypass detected",
+      "severity": "CRITICAL",
+      "category": "AMSI Bypass",
+      "description": "amsiInitFailed set to True \u2014 AMSI scanning completely bypassed.",
+      "affected_items": [
+        "amsiInitFailed = True"
+      ],
+      "affected_count": 1,
+      "remediation": "Restart PowerShell session. Investigate source of bypass.",
+      "platform": "Windows",
+      "atomic_guid": "695eed40-e949-40e5-b306-b4031e4154bd",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 14,
+      "check_id": "T1562.001-14",
+      "title": "AMSI Provider registry key removed",
+      "severity": "CRITICAL",
+      "category": "AMSI Bypass",
+      "description": "Windows Defender AMSI provider key deleted from registry.",
+      "affected_items": [
+        "HKLM\\SOFTWARE\\Microsoft\\AMSI\\Providers\\{2781761E-...}: MISSING"
+      ],
+      "affected_count": 1,
+      "remediation": "Recreate key: New-Item 'HKLM:\\SOFTWARE\\Microsoft\\AMSI\\Providers\\{2781761E-28E0-4109-99FE-B9D127C57AFE}'",
+      "platform": "Windows",
+      "atomic_guid": "13f09b91-c953-438e-845b-b585e51cac9b",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 53,
+      "check_id": "T1562.001-53",
+      "title": "AMSI disabled via AmsiEnable registry key",
+      "severity": "HIGH",
+      "category": "AMSI Bypass",
+      "description": "AmsiEnable=0 in registry \u2014 AMSI disabled for scripts.",
+      "affected_items": [
+        "HKCU\\...\\AmsiEnable = 0"
+      ],
+      "affected_count": 1,
+      "remediation": "Remove key: Remove-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows Script\\Settings' -Name AmsiEnable",
+      "platform": "Windows",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 15,
+      "check_id": "T1562.001-15",
+      "title": "Security services disabled (2)",
+      "severity": "CRITICAL",
+      "category": "Security Services",
+      "description": "Security product services stopped or set to disabled.",
+      "affected_items": [
+        "WinDefend: stopped",
+        "Sense: disabled"
+      ],
+      "affected_count": 2,
+      "remediation": "Re-enable: sc config <service> start= auto && net start <service>",
+      "platform": "Windows",
+      "atomic_guid": "a1230893-56ac-4c81-b644-2108e982f8f5",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 21,
+      "check_id": "T1562.001-21",
+      "title": "Security software installed but service missing (2)",
+      "severity": "HIGH",
+      "category": "Security Services",
+      "description": "Software installed but its service was removed.",
+      "affected_items": [
+        "CrowdStrike Falcon Sensor",
+        "Microsoft Defender"
+      ],
+      "affected_count": 2,
+      "remediation": "Reinstall security product or restore service.",
+      "platform": "Windows",
+      "atomic_guid": "ae753dda-0f15-4af6-a168-b9ba16143143",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 16,
+      "check_id": "T1562.001-16",
+      "title": "Defender ATP tampered via PowerShell (4 settings)",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "Set-MpPreference used to disable Defender protections.",
+      "affected_items": [
+        "DisableRealtimeMonitoring = True \u2014 Realtime monitoring disabled",
+        "DisableBehaviorMonitoring = True \u2014 Behavior monitoring disabled",
+        "DisableScriptScanning = True \u2014 Script scanning disabled",
+        "DisableBlockAtFirstSeen = True \u2014 Block at first seen disabled"
+      ],
+      "affected_count": 4,
+      "remediation": "Set-MpPreference -DisableRealtimeMonitoring 0 (repeat for each setting)",
+      "platform": "Windows",
+      "atomic_guid": "6b8df440-51ec-4d53-bf83-899591c9b5d7",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 17,
+      "check_id": "T1562.001-17",
+      "title": "WinDefend service stopped via command prompt",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "sc stop WinDefend executed.",
+      "affected_items": [
+        "WinDefend: stopped"
+      ],
+      "affected_count": 1,
+      "remediation": "sc config WinDefend start= auto && sc start WinDefend",
+      "platform": "Windows",
+      "atomic_guid": "aa875ed4-8935-47e2-b2c5-6ec00ab220d2",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 18,
+      "check_id": "T1562.001-18",
+      "title": "Defender disabled via DisableAntiSpyware registry",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "DisableAntiSpyware=1 \u2014 entire Defender disabled after reboot.",
+      "affected_items": [
+        "HKLM\\...\\Windows Defender\\DisableAntiSpyware = 1"
+      ],
+      "affected_count": 1,
+      "remediation": "Set-ItemProperty 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows Defender' -Name DisableAntiSpyware -Value 0",
+      "platform": "Windows",
+      "atomic_guid": "1b3e0146-a1e5-4c5c-89fb-1bb2ffe8fc45",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 20,
+      "check_id": "T1562.001-20",
+      "title": "Defender definitions outdated (45 days)",
+      "severity": "HIGH",
+      "category": "Windows Defender Tampering",
+      "description": "Definition files may have been removed (MpCmdRun -RemoveDefinitions).",
+      "affected_items": [
+        "Signature age: 45 days"
+      ],
+      "affected_count": 1,
+      "remediation": "\"C:\\Program Files\\Windows Defender\\MpCmdRun.exe\" -SignatureUpdate",
+      "platform": "Windows",
+      "atomic_guid": "3d47daaa-2f56-43e0-94cc-caf5d8d52a68",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 23,
+      "check_id": "T1562.001-23",
+      "title": "Defender folder exclusions on dangerous paths (3)",
+      "severity": "HIGH",
+      "category": "Windows Defender Tampering",
+      "description": "Add-MpPreference -ExclusionPath used on attacker-abused folders.",
+      "affected_items": [
+        "C:\\Temp",
+        "C:\\Windows\\Temp\\*",
+        "C:\\Users\\Public"
+      ],
+      "affected_count": 3,
+      "remediation": "Remove-MpPreference -ExclusionPath <path>",
+      "platform": "Windows",
+      "atomic_guid": "0b19f4ee-de90-4059-88cb-63c800c683ed",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 24,
+      "check_id": "T1562.001-24",
+      "title": "Defender extension exclusions for executables (2)",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "Executable extensions excluded from scanning.",
+      "affected_items": [
+        ".exe",
+        ".ps1"
+      ],
+      "affected_count": 2,
+      "remediation": "Remove-MpPreference -ExclusionExtension <ext>",
+      "platform": "Windows",
+      "atomic_guid": "315f4be6-2240-4552-b3e1-d1047f5eecea",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 25,
+      "check_id": "T1562.001-25",
+      "title": "Defender process exclusions for LOLBins (2)",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "LOLBin processes excluded from Defender scanning.",
+      "affected_items": [
+        "powershell.exe",
+        "cmd.exe"
+      ],
+      "affected_count": 2,
+      "remediation": "Remove-MpPreference -ExclusionProcess <process>",
+      "platform": "Windows",
+      "atomic_guid": "a123ce6a-3916-45d6-ba9c-7d4081315c27",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 27,
+      "check_id": "T1562.001-27",
+      "title": "Windows Defender removed via DISM",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "Dism /online /Disable-Feature /FeatureName:Windows-Defender executed.",
+      "affected_items": [
+        "Windows-Defender: disabled"
+      ],
+      "affected_count": 1,
+      "remediation": "Dism /online /Enable-Feature /FeatureName:Windows-Defender",
+      "platform": "Windows",
+      "atomic_guid": "871438ac-7d6e-432a-b27d-3e7db69faf58",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 28,
+      "check_id": "T1562.001-28",
+      "title": "NirSoft AdvancedRun detected (WhisperGate TTP)",
+      "severity": "HIGH",
+      "category": "Windows Defender Tampering",
+      "description": "AdvancedRun.exe used to stop Defender as SYSTEM.",
+      "affected_items": [
+        "AdvancedRun.exe"
+      ],
+      "affected_count": 1,
+      "remediation": "Kill AdvancedRun process. Investigate for WhisperGate indicators.",
+      "platform": "Windows",
+      "atomic_guid": "81ce22fd-9612-4154-918e-8a1f285d214d",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 27,
+      "check_id": "T1562.001-27",
+      "title": "Windows Defender removed via DISM",
+      "severity": "CRITICAL",
+      "category": "Windows Defender Tampering",
+      "description": "Dism /online /Disable-Feature /FeatureName:Windows-Defender executed.",
+      "affected_items": [
+        "Windows-Defender: disabled"
+      ],
+      "affected_count": 1,
+      "remediation": "Dism /online /Enable-Feature /FeatureName:Windows-Defender",
+      "platform": "Windows",
+      "atomic_guid": "871438ac-7d6e-432a-b27d-3e7db69faf58",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 38,
+      "check_id": "T1562.001-38",
+      "title": "Defender scheduled tasks deleted (4)",
+      "severity": "HIGH",
+      "category": "Windows Defender Tampering",
+      "description": "Windows Defender scheduled tasks removed \u2014 scanning won't run.",
+      "affected_items": [
+        "Missing: Windows Defender Scheduled Scan",
+        "Missing: Windows Defender Cleanup",
+        "Missing: Windows Defender Verification",
+        "Missing: Windows Defender Cache Maintenance"
+      ],
+      "affected_count": 4,
+      "remediation": "Restore from backup or reinstall Defender.",
+      "platform": "Windows",
+      "atomic_guid": "4b841aa1-0d05-4b32-bbe7-7564346e7c76",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 48,
+      "check_id": "T1562.001-48",
+      "title": "Defender tampered via registry - reg.exe (2)",
+      "severity": "CRITICAL",
+      "category": "Defender Registry",
+      "description": "Defender GPO registry keys set to disable protection.",
+      "affected_items": [
+        "DisableAntiSpyware = 1 (via reg.exe)",
+        "DisableRealtimeMonitoring = 1 (via reg.exe)"
+      ],
+      "affected_count": 2,
+      "remediation": "reg delete HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender /v DisableAntiSpyware /f",
+      "platform": "Windows",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 19,
+      "check_id": "T1562.001-19",
+      "title": "Microsoft Office security features disabled (2)",
+      "severity": "HIGH",
+      "category": "Office Security",
+      "description": "Office macro security and Protected View tampered with.",
+      "affected_items": [
+        "VBAWarnings = 1 (enable all macros)",
+        "DisableInternetFilesInPV = 1 \u2014 Protected View disabled for internet files"
+      ],
+      "affected_count": 2,
+      "remediation": "Remove registry keys under HKCU\\Software\\Microsoft\\Office\\16.0\\Excel\\Security",
+      "platform": "Windows",
+      "atomic_guid": "6f5fb61b-4e56-4a3d-a8c3-82e13686c6d7",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 3,
+      "check_id": "T1562.001-03",
+      "title": "Carbon Black Response disabled",
+      "severity": "HIGH",
+      "category": "EDR-Specific",
+      "description": "cbdaemon stopped \u2014 EDR visibility lost.",
+      "affected_items": [
+        "cbdaemon: disabled"
+      ],
+      "affected_count": 1,
+      "remediation": "systemctl enable cbdaemon && systemctl start cbdaemon",
+      "platform": "Linux",
+      "atomic_guid": "ae8943f7-0f8d-44de-962d-fbc2e2f03eb8",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 22,
+      "check_id": "T1562.001-22",
+      "title": "CrowdStrike Falcon not found (may be uninstalled)",
+      "severity": "CRITICAL",
+      "category": "EDR-Specific",
+      "description": "CrowdStrike service not found \u2014 WindowsSensor.exe /uninstall suspected.",
+      "affected_items": [
+        "CrowdStrike services: not found"
+      ],
+      "affected_count": 1,
+      "remediation": "Reinstall CrowdStrike Falcon sensor.",
+      "platform": "Windows",
+      "atomic_guid": "b32b1ccf-f7c1-49bc-9ddd-7d7466a7b297",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 30,
+      "check_id": "T1562.001-30",
+      "title": "Windows Event Log service stopped",
+      "severity": "CRITICAL",
+      "category": "Event Log Stealth",
+      "description": "EventLog service killed \u2014 possibly via WinPwn/Phant0m.",
+      "affected_items": [
+        "EventLog: stopped"
+      ],
+      "affected_count": 1,
+      "remediation": "net start EventLog",
+      "platform": "Windows",
+      "atomic_guid": "7869d7a3-3a30-4d2c-a5d2-f1cd9c34ce66",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 32,
+      "check_id": "T1562.001-32",
+      "title": "LockBit Black: Privacy Experience disabled (cmd)",
+      "severity": "MEDIUM",
+      "category": "LockBit Black",
+      "description": "DisablePrivacyExperience=1 \u2014 LockBit Black indicator.",
+      "affected_items": [
+        "DisablePrivacyExperience = 1"
+      ],
+      "affected_count": 1,
+      "remediation": "reg delete HKCU\\Software\\Policies\\Microsoft\\Windows\\OOBE /v DisablePrivacyExperience /f",
+      "platform": "Windows",
+      "atomic_guid": "d6d22332-d07d-498f-aea0-6139ecb7850e",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 33,
+      "check_id": "T1562.001-33",
+      "title": "LockBit Black: Automatic logon enabled",
+      "severity": "HIGH",
+      "category": "LockBit Black",
+      "description": "AutoAdminLogon=1 \u2014 LockBit Black ransomware indicator.",
+      "affected_items": [
+        "AutoAdminLogon = 1 (password may be in registry)"
+      ],
+      "affected_count": 1,
+      "remediation": "reg delete 'HKLM\\...\\Winlogon' /v AutoAdminLogon /f",
+      "platform": "Windows",
+      "atomic_guid": "9719d0e1-4fe0-4b2e-9a72-7ad3ee8ddc70",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 44,
+      "check_id": "T1562.001-44",
+      "title": "HVCI (Hypervisor-Enforced Code Integrity) disabled",
+      "severity": "HIGH",
+      "category": "HVCI",
+      "description": "HVCI disabled \u2014 kernel code integrity not enforced (BlackLotus TTP).",
+      "affected_items": [
+        "HypervisorEnforcedCodeIntegrity\\Enabled = 0"
+      ],
+      "affected_count": 1,
+      "remediation": "Re-enable HVCI via Group Policy or registry.",
+      "platform": "Windows",
+      "atomic_guid": "70bd71e6-eba4-4e00-92f7-617911dbe020",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 46,
+      "check_id": "T1562.001-46",
+      "title": "AWS GuardDuty suspended or deleted",
+      "severity": "CRITICAL",
+      "category": "AWS Cloud",
+      "description": "GuardDuty suspended \u2014 cloud threat detection disabled.",
+      "affected_items": [
+        "Status: suspended"
+      ],
+      "affected_count": 1,
+      "remediation": "Re-enable GuardDuty in AWS console.",
+      "platform": "AWS",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 47,
+      "check_id": "T1562.001-47",
+      "title": "Microsoft Defender ATP disabled on Linux/macOS",
+      "severity": "HIGH",
+      "category": "Defender Linux/macOS",
+      "description": "mdatp service stopped \u2014 Defender protection lost.",
+      "affected_items": [
+        "mdatp: stopped"
+      ],
+      "affected_count": 1,
+      "remediation": "systemctl enable mdatp && systemctl start mdatp",
+      "platform": "Linux",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 50,
+      "check_id": "T1562.001-50",
+      "title": "ESXi account lockout policy disabled",
+      "severity": "HIGH",
+      "category": "ESXi",
+      "description": "Security.AccountLockFailures=0 \u2014 brute force protection disabled.",
+      "affected_items": [
+        "AccountLockFailures = 0"
+      ],
+      "affected_count": 1,
+      "remediation": "Set Security.AccountLockFailures=5 via PowerCLI.",
+      "platform": "ESXi",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    },
+    {
+      "test_number": 54,
+      "check_id": "T1562.001-54",
+      "title": "EventLog-Application ETW Auto Logger disabled (cmd)",
+      "severity": "CRITICAL",
+      "category": "ETW Tampering",
+      "description": "ETW Auto Logger Start=0 \u2014 Event Log Application channel disabled.",
+      "affected_items": [
+        "EventLog-Application\\Start = 0"
+      ],
+      "affected_count": 1,
+      "remediation": "reg add \"HKLM\\System\\CurrentControlSet\\Control\\WMI\\Autologger\\EventLog-Application\" /v Start /t REG_DWORD /d 1 /f",
+      "platform": "Windows",
+      "atomic_guid": "",
+      "technique": "T1562.001",
+      "timestamp": "2026-03-31T07:51:55.708130"
+    }
+  ]
+}
